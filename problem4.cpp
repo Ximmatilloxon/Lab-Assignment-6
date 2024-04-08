@@ -44,5 +44,8 @@ int main(){
             vec.push_back(temp);
         }
     }
-    for(auto i:vec) cout << i[0] << " " << i[1] << endl;
+    cout << vec[0][0] << " " << vec[0][1];
+    for (int i = 1; i < vec.size(); ++i) {
+        cout << "\n" << vec[i][0] << " " << vec[i][1];
+    }
 }
