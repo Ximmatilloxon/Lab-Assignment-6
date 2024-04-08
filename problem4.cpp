@@ -2,7 +2,7 @@
 #include "vector"
 using namespace std;
 
-void heapify(int arr[], int n, int i){
+void heapify(vector<int> &arr, int n, int i){
     int largest = i, l = 2 * i + 1, r = 2 * i + 2;
     if(l < n && arr[l] > arr[largest]) largest = l;
     if(r < n && arr[r] > arr[largest]) largest = r;
@@ -12,7 +12,7 @@ void heapify(int arr[], int n, int i){
     }
 }
 
-void heapSort(int arr[], int n){
+void heapSort(vector<int> &arr, int n){
     for (int i = n/2 - 1; i >=0; --i) {
         heapify(arr, n, i);
     }
@@ -22,27 +22,21 @@ void heapSort(int arr[], int n){
     }
 }
 
-int minDiff(int arr[], int n){
-    int dif = INT_MAX;
-    for (int i = 0; i < n - 1; ++i) dif = min(dif, abs(arr[i] - arr[i + 1]));
-    return dif;
-}
-
 int main(){
     int n;
     cin >> n;
-    int arr[n];
-    for (int i = 0; i < n; ++i) cin >> arr[i];
-    heapSort(arr, n);
-    int dif = minDiff(arr, n);
+    vector<int> arr;
+    for (int i = 0; i < n; ++i) {
+        int t;
+        cin >> t;
+        arr.push_back(t);
+    }
+    heapSort(arr, arr.size());
+    int dif = INT_MAX;
+    for (int i = 0; i < arr.size() - 1; ++i) dif = min(dif, arr[i + 1] - arr[i]);
     vector<vector<int>> vec;
-    for (int i = 0; i < n - 1; ++i) {
-        vector<int> temp;
-        if(abs(arr[i] - arr[i+1]) == dif){
-            temp.push_back(min(arr[i], arr[i+1]));
-            temp.push_back(max(arr[i], arr[i+1]));
-            vec.push_back(temp);
-        }
+    for (int i = 0; i < arr.size() - 1; ++i) {
+        if(arr[i + 1] - arr[i] == dif) vec.push_back({arr[i], arr[i+1]});
     }
     cout << vec[0][0] << " " << vec[0][1];
     for (int i = 1; i < vec.size(); ++i) {
