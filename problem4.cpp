@@ -32,18 +32,17 @@ int main(){
         arr.push_back(t);
     }
     heapSort(arr, arr.size());
+
     int dif = INT_MAX;
-    for (int i = 0; i < arr.size(); ++i){
-        for (int j = 0; j < arr.size(); ++j) {
-            if(i != j) dif = min(dif, abs(arr[j] - arr[i]));
-        }
-    }
-    vector<vector<int>> vec;
+    for (int i = 0; i < arr.size() - 1; ++i) dif = min(dif, arr[i + 1] - arr[i]);
+
+    vector<pair<int, int>> vec;
     for (int i = 0; i < arr.size() - 1; ++i) {
-        if(arr[i + 1] - arr[i] == dif) vec.push_back({arr[i], arr[i+1]});
+        if(arr[i + 1] - arr[i] == dif && arr[i + 1] > arr[i]) vec.push_back(make_pair(arr[i], arr[i+1]));
     }
-    cout << vec[0][0] << " " << vec[0][1];
+
+    cout << vec[0].first << " " << vec[0].second;
     for (int i = 1; i < vec.size(); ++i) {
-        cout << "\n" << vec[i][0] << " " << vec[i][1];
+        cout << "\n" << vec[i].first << " " << vec[i].second;
     }
 }
