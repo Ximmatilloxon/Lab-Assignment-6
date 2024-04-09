@@ -22,6 +22,16 @@ void heapSort(vector<int> &arr, int n){
     }
 }
 
+int diff(vector<int> &arr){
+    int dif = INT_MAX;
+    for (int i = 0; i < arr.size(); ++i){
+        for (int j = 0; j < arr.size(); ++j) {
+            if(j != i) dif = min(dif, abs(arr[i] - arr[j]));
+        }
+    }
+    return dif;
+}
+
 int main(){
     int n;
     cin >> n;
@@ -31,18 +41,20 @@ int main(){
         cin >> t;
         arr.push_back(t);
     }
-    heapSort(arr, arr.size());
+    if(n == 1) cout << arr[0];
+    else {
+        heapSort(arr, n);
 
-    int dif = INT_MAX;
-    for (int i = 0; i < arr.size() - 1; ++i) dif = min(dif, arr[i + 1] - arr[i]);
+        int dif = diff(arr);
 
-    vector<pair<int, int>> vec;
-    for (int i = 0; i < arr.size() - 1; ++i) {
-        if(arr[i + 1] - arr[i] == dif && arr[i + 1] > arr[i]) vec.push_back(make_pair(arr[i], arr[i+1]));
-    }
+        vector<pair<int, int>> vec;
+        for (int i = 0; i < arr.size() - 1; ++i) {
+            if (arr[i + 1] - arr[i] == dif && arr[i + 1] > arr[i]) vec.emplace_back(arr[i], arr[i + 1]);
+        }
 
-    cout << vec[0].first << " " << vec[0].second;
-    for (int i = 1; i < vec.size(); ++i) {
-        cout << "\n" << vec[i].first << " " << vec[i].second;
+        cout << vec[0].first << " " << vec[0].second;
+        for (int i = 1; i < vec.size(); ++i) {
+            cout << "\n" << vec[i].first << " " << vec[i].second;
+        }
     }
 }
